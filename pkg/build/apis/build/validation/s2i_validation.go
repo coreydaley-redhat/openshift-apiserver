@@ -9,13 +9,14 @@ import (
 	"strings"
 )
 
+var sshTransport = regexp.MustCompile(`^ssh://.+$`)
+var gitTransport = regexp.MustCompile(`^git://.+$`)
+var httpTransport = regexp.MustCompile(`^https?://.+$`)
+var localTransport = regexp.MustCompile(`^file://.+$`)
+
 var urlSchemeRegexp = regexp.MustCompile("(?i)^[a-z][-a-z0-9+.]*:") // matches scheme: according to RFC3986
 var dosDriveRegexp = regexp.MustCompile("(?i)^[a-z]:")
-var scpRegexp = regexp.MustCompile("^" +
-	"(?:([^@/]*)@)?" + // user@ (optional)
-	"([^/]*):" + //            host:
-	"(.*)" + //                     path
-	"$")
+var scpRegexp = regexp.MustCompile(`^(\w+://)(.+)@([\w\d\.]+):(.+)$`)
 
 // URLType indicates the type of the URL (see above)
 type URLType int
@@ -55,7 +56,24 @@ type URL struct {
 
 // Parse parses a "Git URL"
 func parseGitURL(rawurl string) (*URL, error) {
-	if urlSchemeRegexp.MatchString(rawurl) &&
+	s, fragment := splitOnByte(rawurl, '#')
+
+	if m := scpRegexp.FindStringSubmatch(s); m != nil &&
+		(runtime.GOOS != "windows" || !dosDriveRegexp.MatchString(s)) {
+		u := &url.URL{
+			Host:     m[3],
+			Path:     m[4],
+			Fragment: fragment,
+		}
+		if m[1] != "" {
+			u.User = url.User(m[2])
+		}
+
+		return &URL{
+			URL:  *u,
+			Type: URLTypeSCP,
+		}, nil
+	} else if urlSchemeRegexp.MatchString(rawurl) &&
 		(runtime.GOOS != "windows" || !dosDriveRegexp.MatchString(rawurl)) {
 		u, err := url.Parse(rawurl)
 		if err != nil {
@@ -74,34 +92,16 @@ func parseGitURL(rawurl string) (*URL, error) {
 			URL:  *u,
 			Type: URLTypeURL,
 		}, nil
-	}
-
-	s, fragment := splitOnByte(rawurl, '#')
-
-	if m := scpRegexp.FindStringSubmatch(s); m != nil &&
-		(runtime.GOOS != "windows" || !dosDriveRegexp.MatchString(s)) {
-		u := &url.URL{
-			Host:     m[2],
-			Path:     m[3],
-			Fragment: fragment,
-		}
-		if m[1] != "" {
-			u.User = url.User(m[1])
-		}
-
+	} else {
 		return &URL{
-			URL:  *u,
-			Type: URLTypeSCP,
+			URL: url.URL{
+				Path:     s,
+				Fragment: fragment,
+			},
+			Type: URLTypeLocal,
 		}, nil
 	}
 
-	return &URL{
-		URL: url.URL{
-			Path:     s,
-			Fragment: fragment,
-		},
-		Type: URLTypeLocal,
-	}, nil
 }
 
 func splitOnByte(s string, c byte) (string, string) {
