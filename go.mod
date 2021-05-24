@@ -31,13 +31,13 @@ require (
 	github.com/spf13/cobra v1.1.1
 	github.com/spf13/pflag v1.0.5
 	go.etcd.io/etcd v0.5.0-alpha.5.0.20200910180754-dd1b699fc489
-	k8s.io/api v0.21.0
+	k8s.io/api v0.21.1
 	k8s.io/apiextensions-apiserver v0.21.0
-	k8s.io/apimachinery v0.21.0
+	k8s.io/apimachinery v0.21.1
 	k8s.io/apiserver v0.21.0
 	k8s.io/client-go v0.21.0
 	k8s.io/cloud-provider v0.21.0
-	k8s.io/code-generator v0.21.0
+	k8s.io/code-generator v0.21.1
 	k8s.io/component-base v0.21.0
 	k8s.io/component-helpers v0.21.0
 	k8s.io/klog/v2 v2.8.0
@@ -51,6 +51,7 @@ replace (
 	github.com/docker/distribution => github.com/openshift/docker-distribution v0.0.0-20180925154709-d4c35485a70d
 	github.com/docker/docker => github.com/openshift/moby-moby v0.0.0-20190308215630-da810a85109d
 	github.com/moby/buildkit => github.com/dmcgowan/buildkit v0.0.0-20170731200553-da2b9dc7dab9
+	github.com/openshift/api => github.com/coreydaley/api v0.0.0-20210524162332-560b5eb8d62c
 	k8s.io/api => k8s.io/api v0.21.0
 	k8s.io/apiextensions-apiserver => k8s.io/apiextensions-apiserver v0.21.0
 	k8s.io/apimachinery => k8s.io/apimachinery v0.21.0

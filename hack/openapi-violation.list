@@ -48,10 +48,12 @@ API rule violation: list_type_missing,github.com/openshift/api/build/v1,BuildSou
 API rule violation: list_type_missing,github.com/openshift/api/build/v1,BuildSpec,TriggeredBy
 API rule violation: list_type_missing,github.com/openshift/api/build/v1,BuildStatus,Conditions
 API rule violation: list_type_missing,github.com/openshift/api/build/v1,BuildStatus,Stages
+API rule violation: list_type_missing,github.com/openshift/api/build/v1,BuildVolume,Mounts
 API rule violation: list_type_missing,github.com/openshift/api/build/v1,CustomBuildStrategy,Env
 API rule violation: list_type_missing,github.com/openshift/api/build/v1,CustomBuildStrategy,Secrets
 API rule violation: list_type_missing,github.com/openshift/api/build/v1,DockerBuildStrategy,BuildArgs
 API rule violation: list_type_missing,github.com/openshift/api/build/v1,DockerBuildStrategy,Env
+API rule violation: list_type_missing,github.com/openshift/api/build/v1,DockerBuildStrategy,Volumes
 API rule violation: list_type_missing,github.com/openshift/api/build/v1,DockerStrategyOptions,BuildArgs
 API rule violation: list_type_missing,github.com/openshift/api/build/v1,GenericWebHookEvent,Env
 API rule violation: list_type_missing,github.com/openshift/api/build/v1,GitInfo,Refs
@@ -59,6 +61,7 @@ API rule violation: list_type_missing,github.com/openshift/api/build/v1,ImageSou
 API rule violation: list_type_missing,github.com/openshift/api/build/v1,ImageSource,Paths
 API rule violation: list_type_missing,github.com/openshift/api/build/v1,JenkinsPipelineBuildStrategy,Env
 API rule violation: list_type_missing,github.com/openshift/api/build/v1,SourceBuildStrategy,Env
+API rule violation: list_type_missing,github.com/openshift/api/build/v1,SourceBuildStrategy,Volumes
 API rule violation: list_type_missing,github.com/openshift/api/build/v1,StageInfo,Steps
 API rule violation: list_type_missing,github.com/openshift/api/cloudnetwork/v1,CloudPrivateIPConfigStatus,Conditions
 API rule violation: list_type_missing,github.com/openshift/api/config/v1,APIServerNamedServingCert,Names
