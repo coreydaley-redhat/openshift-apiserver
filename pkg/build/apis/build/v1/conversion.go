@@ -246,6 +246,23 @@ func Convert_url_Values_To_v1_BuildLogOptions(in *url.Values, out *v1.BuildLogOp
 	return nil
 }
 
+// Convert_build_BuildVolumeSource_To_v1_BuildVolumeSource converts the internal BuildVolumeSource
+// representation to the public API's BuildVolumeSource representation.
+func Convert_build_BuildVolumeSource_To_v1_BuildVolumeSource(in *newer.BuildVolumeSource, out *v1.BuildVolumeSource, s conversion.Scope) error {
+	if err := autoConvert_build_BuildVolumeSource_To_v1_BuildVolumeSource(in, out, s); err != nil {
+		return err
+	}
+	switch {
+	case in.Secret != nil:
+		out.Type = v1.BuildVolumeSourceTypeSecret
+	case in.ConfigMap != nil:
+		out.Type = v1.BuildVolumeSourceTypeConfigMap
+	default:
+		out.Type = ""
+	}
+	return nil
+}
+
 // AddCustomConversionFuncs adds conversion functions which cannot be automatically generated.
 // This is typically due to the objects not having 1:1 field mappings.
 func AddCustomConversionFuncs(scheme *runtime.Scheme) error {

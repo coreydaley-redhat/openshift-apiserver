@@ -1428,10 +1428,6 @@ const (
 // Only one of its supported types may be specified at any given time.
 type BuildVolumeSource struct {
 
-	// type is the BuildVolumeSourceType for the volume source.
-	// Type must match the populated volume source, and if not specified will be inferred on admission.
-	Type BuildVolumeSourceType
-
 	// secret represents a Secret that should populate this volume.
 	// More info: https://kubernetes.io/docs/concepts/storage/volumes#secret
 	// +optional
